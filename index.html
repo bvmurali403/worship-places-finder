@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Discover temples, mosques, churches, gurdwaras and worship places near you.">
+
+    <title>Worship Places Finder</title>
+
+    <!-- Leaflet Map CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+        🛕 Worship Places
+    </div>
+
+    <nav class="navbar">
+
+        <a href="#home">Home</a>
+
+        <a href="#categories">Explore</a>
+
+        <a href="#places">Places</a>
+
+        <a href="#mapSection">Map</a>
+
+        <a href="#about">About</a>
+
+    </nav>
+
+    <div class="header-actions">
+
+        <button
+            id="themeBtn"
+            class="header-icon-btn"
+            title="Toggle dark mode">
+            🌙
+        </button>
+
+        <button
+            id="locationBtn"
+            class="location-btn">
+            📍 Location
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section
+    class="hero"
+    id="home">
+
+    <div class="hero-content">
+
+        <span class="hero-badge">
+            🌍 Explore Sacred Places
+        </span>
+
+        <h1>
+            Discover Worship Places
+        </h1>
+
+        <p>
+            Find temples, mosques, churches, gurdwaras
+            and other places of worship near you.
+        </p>
+
+        <div class="search-container">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search temples, churches, mosques..."
+                autocomplete="off"
+            >
+
+            <button id="searchBtn">
+                🔍 Search
+            </button>
+
+        </div>
+
+        <div
+            id="locationStatus"
+            class="location-status">
+            📍 Enable location to discover nearby places
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CATEGORIES
+===================================================== -->
+
+<section
+    class="categories-section"
+    id="categories">
+
+    <h2>
+        Explore by Religion
+    </h2>
+
+    <p class="section-subtitle">
+        Choose a category to discover places of worship.
+    </p>
+
+    <div class="categories">
+
+        <div
+            class="category-card"
+            data-category="hindu">
+
+            <span>🛕</span>
+
+            <h3>Hindu</h3>
+
+        </div>
+
+
+        <div
+            class="category-card"
+            data-category="muslim">
+
+            <span>🕌</span>
+
+            <h3>Muslim</h3>
+
+        </div>
+
+
+        <div
+            class="category-card"
+            data-category="christian">
+
+            <span>⛪</span>
+
+            <h3>Christian</h3>
+
+        </div>
+
+
+        <div
+            class="category-card"
+            data-category="sikh">
+
+            <span>🪯</span>
+
+            <h3>Sikh</h3>
+
+        </div>
+
+
+        <div
+            class="category-card"
+            data-category="buddhist">
+
+            <span>☸️</span>
+
+            <h3>Buddhist</h3>
+
+        </div>
+
+
+        <div
+            class="category-card"
+            data-category="jain">
+
+            <span>🛐</span>
+
+            <h3>Jain</h3>
+
+        </div>
+
+
+        <div
+            class="category-card"
+            data-category="jewish">
+
+            <span>🕍</span>
+
+            <h3>Jewish</h3>
+
+        </div>
+
+
+        <div
+            class="category-card"
+            data-category="zoroastrian">
+
+            <span>🔥</span>
+
+            <h3>Zoroastrian</h3>
+
+        </div>
+
+    </div>
+
+    <button
+        id="resetBtn"
+        class="reset-btn">
+
+        Show All Places
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     PLACES
+===================================================== -->
+
+<section
+    class="places-section"
+    id="places">
+
+    <div class="section-heading">
+
+        <div>
+
+            <h2>
+                📍 Worship Places
+            </h2>
+
+            <p id="resultCount">
+                Showing all worship places
+            </p>
+
+        </div>
+
+        <div class="sort-container">
+
+            <label for="sortSelect">
+                Sort:
+            </label>
+
+            <select id="sortSelect">
+
+                <option value="default">
+                    Recommended
+                </option>
+
+                <option value="distance">
+                    Nearest
+                </option>
+
+                <option value="rating">
+                    Highest Rated
+                </option>
+
+                <option value="name">
+                    Name A-Z
+                </option>
+
+            </select>
+
+            <button
+                id="viewAllBtn"
+                class="view-all-btn">
+
+                View All →
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Loading -->
+
+    <div
+        id="loading"
+        class="loading">
+
+        <div class="loader"></div>
+
+        <p>
+            Finding worship places...
+        </p>
+
+    </div>
+
+
+    <!-- Cards -->
+
+    <div
+        class="places-container"
+        id="placesContainer">
+
+
+        <!-- =================================================
+             PLACE 1
+        ================================================= -->
+
+        <article
+            class="place-card"
+            data-name="Sri Venkateswara Temple"
+            data-category="hindu"
+            data-lat="13.6833"
+            data-lng="79.3471"
+            data-rating="4.8"
+            data-distance="2.1">
+
+            <div class="place-image temple-image">
+
+                <img
+                    src="images/hindu.jpg"
+                    alt="Hindu Temple"
+                    onerror="this.style.display='none'">
+
+                <span class="image-fallback">
+                    🛕
+                </span>
+
+                <button
+                    class="favorite-btn"
+                    title="Add to favorites">
+
+                    ♡
+
+                </button>
+
+            </div>
+
+
+            <div class="place-info">
+
+                <h3>
+                    Sri Venkateswara Temple
+                </h3>
+
+                <p>
+                    Hindu Temple
+                </p>
+
+                <div class="place-details">
+
+                    <span>
+                        ⭐ 4.8
+                    </span>
+
+                    <span>
+                        📍 2.1 km
+                    </span>
+
+                </div>
+
+                <div class="opening-status">
+                    🟢 Open Today
+                </div>
+
+                <div class="facilities">
+
+                    <span>🅿️ Parking</span>
+
+                    <span>♿ Accessible</span>
+
+                    <span>🚻 Restrooms</span>
+
+                    <span>🍽️ Food</span>
+
+                </div>
+
+                <div class="card-buttons">
+
+                    <button
+                        class="details-btn"
+                        onclick="showDetails(this)">
+
+                        View Details
+
+                    </button>
+
+                    <button
+                        class="share-btn"
+                        onclick="sharePlace('Sri Venkateswara Temple')">
+
+                        ↗
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+             PLACE 2
+        ================================================= -->
+
+        <article
+            class="place-card"
+            data-name="Central Mosque"
+            data-category="muslim"
+            data-lat="13.6300"
+            data-lng="79.4200"
+            data-rating="4.7"
+            data-distance="3.4">
+
+            <div class="place-image mosque-image">
+
+                <img
+                    src="images/mosque.jpg"
+                    alt="Mosque"
+                    onerror="this.style.display='none'">
+
+                <span class="image-fallback">
+                    🕌
+                </span>
+
+                <button
+                    class="favorite-btn"
+                    title="Add to favorites">
+
+                    ♡
+
+                </button>
+
+            </div>
+
+            <div class="place-info">
+
+                <h3>
+                    Central Mosque
+                </h3>
+
+                <p>
+                    Mosque
+                </p>
+
+                <div class="place-details">
+
+                    <span>
+                        ⭐ 4.7
+                    </span>
+
+                    <span>
+                        📍 3.4 km
+                    </span>
+
+                </div>
+
+                <div class="opening-status">
+                    🟢 Open Today
+                </div>
+
+                <div class="facilities">
+
+                    <span>🅿️ Parking</span>
+
+                    <span>🚻 Restrooms</span>
+
+                    <span>💧 Drinking Water</span>
+
+                    <span>♿ Accessible</span>
+
+                </div>
+
+                <div class="card-buttons">
+
+                    <button
+                        class="details-btn"
+                        onclick="showDetails(this)">
+
+                        View Details
+
+                    </button>
+
+                    <button
+                        class="share-btn"
+                        onclick="sharePlace('Central Mosque')">
+
+                        ↗
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+             PLACE 3
+        ================================================= -->
+
+        <article
+            class="place-card"
+            data-name="St. Mary's Church"
+            data-category="christian"
+            data-lat="13.6288"
+            data-lng="79.4190"
+            data-rating="4.6"
+            data-distance="4.2">
+
+            <div class="place-image church-image">
+
+                <img
+                    src="images/church.jpg"
+                    alt="Church"
+                    onerror="this.style.display='none'">
+
+                <span class="image-fallback">
+                    ⛪
+                </span>
+
+                <button
+                    class="favorite-btn"
+                    title="Add to favorites">
+
+                    ♡
+
+                </button>
+
+            </div>
+
+            <div class="place-info">
+
+                <h3>
+                    St. Mary's Church
+                </h3>
+
+                <p>
+                    Church
+                </p>
+
+                <div class="place-details">
+
+                    <span>
+                        ⭐ 4.6
+                    </span>
+
+                    <span>
+                        📍 4.2 km
+                    </span>
+
+                </div>
+
+                <div class="opening-status">
+                    🟢 Open Today
+                </div>
+
+                <div class="facilities">
+
+                    <span>🅿️ Parking</span>
+
+                    <span>♿ Accessible</span>
+
+                    <span>🚻 Restrooms</span>
+
+                    <span>🎵 Choir</span>
+
+                </div>
+
+                <div class="card-buttons">
+
+                    <button
+                        class="details-btn"
+                        onclick="showDetails(this)">
+
+                        View Details
+
+                    </button>
+
+                    <button
+                        class="share-btn"
+                        onclick="sharePlace('St. Mary Church')">
+
+                        ↗
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+             PLACE 4
+        ================================================= -->
+
+        <article
+            class="place-card"
+            data-name="Local Gurdwara"
+            data-category="sikh"
+            data-lat="13.6500"
+            data-lng="79.4100"
+            data-rating="4.8"
+            data-distance="5.1">
+
+            <div class="place-image sikh-image">
+
+                <img
+                    src="images/gurdwara.jpg"
+                    alt="Gurdwara"
+                    onerror="this.style.display='none'">
+
+                <span class="image-fallback">
+                    🪯
+                </span>
+
+                <button
+                    class="favorite-btn"
+                    title="Add to favorites">
+
+                    ♡
+
+                </button>
+
+            </div>
+
+            <div class="place-info">
+
+                <h3>
+                    Local Gurdwara
+                </h3>
+
+                <p>
+                    Gurdwara
+                </p>
+
+                <div class="place-details">
+
+                    <span>
+                        ⭐ 4.8
+                    </span>
+
+                    <span>
+                        📍 5.1 km
+                    </span>
+
+                </div>
+
+                <div class="opening-status">
+                    🟢 Open Today
+                </div>
+
+                <div class="facilities">
+
+                    <span>🍽️ Langar</span>
+
+                    <span>🅿️ Parking</span>
+
+                    <span>🚻 Restrooms</span>
+
+                    <span>♿ Accessible</span>
+
+                </div>
+
+                <div class="card-buttons">
+
+                    <button
+                        class="details-btn"
+                        onclick="showDetails(this)">
+
+                        View Details
+
+                    </button>
+
+                    <button
+                        class="share-btn"
+                        onclick="sharePlace('Local Gurdwara')">
+
+                        ↗
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+             PLACE 5
+        ================================================= -->
+
+        <article
+            class="place-card"
+            data-name="Buddhist Temple"
+            data-category="buddhist"
+            data-lat="13.6000"
+            data-lng="79.3900"
+            data-rating="4.7"
+            data-distance="6.2">
+
+            <div class="place-image">
+
+                <img
+                    src="images/buddhist.jpg"
+                    alt="Buddhist Temple"
+                    onerror="this.style.display='none'">
+
+                <span class="image-fallback">
+                    ☸️
+                </span>
+
+                <button
+                    class="favorite-btn">
+
+                    ♡
+
+                </button>
+
+            </div>
+
+            <div class="place-info">
+
+                <h3>
+                    Buddhist Temple
+                </h3>
+
+                <p>
+                    Buddhist Temple
+                </p>
+
+                <div class="place-details">
+
+                    <span>
+                        ⭐ 4.7
+                    </span>
+
+                    <span>
+                        📍 6.2 km
+                    </span>
+
+                </div>
+
+                <div class="opening-status">
+                    🟢 Open Today
+                </div>
+
+                <div class="facilities">
+
+                    <span>🧘 Meditation</span>
+
+                    <span>🅿️ Parking</span>
+
+                    <span>♿ Accessible</span>
+
+                    <span>🌳 Garden</span>
+
+                </div>
+
+                <div class="card-buttons">
+
+                    <button
+                        class="details-btn"
+                        onclick="showDetails(this)">
+
+                        View Details
+
+                    </button>
+
+                    <button
+                        class="share-btn"
+                        onclick="sharePlace('Buddhist Temple')">
+
+                        ↗
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+             PLACE 6
+        ================================================= -->
+
+        <article
+            class="place-card"
+            data-name="Jain Temple"
+            data-category="jain"
+            data-lat="13.5900"
+            data-lng="79.4000"
+            data-rating="4.6"
+            data-distance="7.1">
+
+            <div class="place-image">
+
+                <img
+                    src="images/jain.jpg"
+                    alt="Jain Temple"
+                    onerror="this.style.display='none'">
+
+                <span class="image-fallback">
+                    🛐
+                </span>
+
+                <button
+                    class="favorite-btn">
+
+                    ♡
+
+                </button>
+
+            </div>
+
+            <div class="place-info">
+
+                <h3>
+                    Jain Temple
+                </h3>
+
+                <p>
+                    Jain Temple
+                </p>
+
+                <div class="place-details">
+
+                    <span>
+                        ⭐ 4.6
+                    </span>
+
+                    <span>
+                        📍 7.1 km
+                    </span>
+
+                </div>
+
+                <div class="opening-status">
+                    🟢 Open Today
+                </div>
+
+                <div class="facilities">
+
+                    <span>🧘 Meditation</span>
+
+                    <span>🅿️ Parking</span>
+
+                    <span>🚻 Restrooms</span>
+
+                    <span>♿ Accessible</span>
+
+                </div>
+
+                <div class="card-buttons">
+
+                    <button
+                        class="details-btn"
+                        onclick="showDetails(this)">
+
+                        View Details
+
+                    </button>
+
+                    <button
+                        class="share-btn"
+                        onclick="sharePlace('Jain Temple')">
+
+                        ↗
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+             PLACE 7
+        ================================================= -->
+
+        <article
+            class="place-card"
+            data-name="Jewish Synagogue"
+            data-category="jewish"
+            data-lat="13.5900"
+            data-lng="79.4100"
+            data-rating="4.5"
+            data-distance="8.2">
+
+            <div class="place-image jewish-image">
+
+                <img
+                    src="images/jewish.jpg"
+                    alt="Jewish Synagogue"
+                    onerror="this.style.display='none'">
+
+                <span class="image-fallback">
+                    🕍
+                </span>
+
+                <button
+                    class="favorite-btn">
+
+                    ♡
+
+                </button>
+
+            </div>
+
+            <div class="place-info">
+
+                <h3>
+                    Jewish Synagogue
+                </h3>
+
+                <p>
+                    Synagogue
+                </p>
+
+                <div class="place-details">
+
+                    <span>
+                        ⭐ 4.5
+                    </span>
+
+                    <span>
+                        📍 8.2 km
+                    </span>
+
+                </div>
+
+                <div class="opening-status">
+                    🟢 Open Today
+                </div>
+
+                <div class="facilities">
+
+                    <span>🅿️ Parking</span>
+
+                    <span>♿ Accessible</span>
+
+                    <span>📚 Library</span>
+
+                    <span>🚻 Restrooms</span>
+
+                </div>
+
+                <div class="card-buttons">
+
+                    <button
+                        class="details-btn"
+                        onclick="showDetails(this)">
+
+                        View Details
+
+                    </button>
+
+                    <button
+                        class="share-btn"
+                        onclick="sharePlace('Jewish Synagogue')">
+
+                        ↗
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+             PLACE 8
+        ================================================= -->
+
+        <article
+            class="place-card"
+            data-name="Zoroastrian Fire Temple"
+            data-category="zoroastrian"
+            data-lat="13.5700"
+            data-lng="79.3800"
+            data-rating="4.5"
+            data-distance="9.3">
+
+            <div class="place-image zoroastrian-image">
+
+                <img
+                    src="images/zoroastrian.jpg"
+                    alt="Zoroastrian Fire Temple"
+                    onerror="this.style.display='none'">
+
+                <span class="image-fallback">
+                    🔥
+                </span>
+
+                <button
+                    class="favorite-btn">
+
+                    ♡
+
+                </button>
+
+            </div>
+
+            <div class="place-info">
+
+                <h3>
+                    Zoroastrian Fire Temple
+                </h3>
+
+                <p>
+                    Zoroastrian Temple
+                </p>
+
+                <div class="place-details">
+
+                    <span>
+                        ⭐ 4.5
+                    </span>
+
+                    <span>
+                        📍 9.3 km
+                    </span>
+
+                </div>
+
+                <div class="opening-status">
+                    🟢 Open Today
+                </div>
+
+                <div class="facilities">
+
+                    <span>🔥 Sacred Fire</span>
+
+                    <span>🅿️ Parking</span>
+
+                    <span>📚 Library</span>
+
+                    <span>♿ Accessible</span>
+
+                    <span>🚻 Restrooms</span>
+
+                </div>
+
+                <div class="card-buttons">
+
+                    <button
+                        class="details-btn"
+                        onclick="showDetails(this)">
+
+                        View Details
+
+                    </button>
+
+                    <button
+                        class="share-btn"
+                        onclick="sharePlace('Zoroastrian Fire Temple')">
+
+                        ↗
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <div
+        id="noResults"
+        class="no-results">
+
+        <div>
+            🔍
+        </div>
+
+        <h3>
+            No worship places found
+        </h3>
+
+        <p>
+            Try another search or category.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MAP
+===================================================== -->
+
+<section
+    class="map-section"
+    id="mapSection">
+
+    <div class="map-heading">
+
+        <div>
+
+            <h2>
+                🗺️ Explore on Map
+            </h2>
+
+            <p>
+                Discover nearby worship places using OpenStreetMap.
+            </p>
+
+        </div>
+
+        <button
+            id="findNearbyBtn"
+            class="primary-btn">
+
+            📍 Find Nearby Places
+
+        </button>
+
+    </div>
+
+    <div
+        id="map"
+        class="map">
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RECENTLY VIEWED
+===================================================== -->
+
+<section
+    class="recent-section"
+    id="recentSection">
+
+    <h2>
+        🕘 Recently Viewed
+    </h2>
+
+    <div
+        id="recentPlaces"
+        class="recent-container">
+
+        <p class="empty-message">
+            No recently viewed places.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FAVORITES
+===================================================== -->
+
+<section
+    class="favorites-section">
+
+    <h2>
+        ❤️ Your Favorites
+    </h2>
+
+    <div
+        id="favoritePlaces"
+        class="recent-container">
+
+        <p class="empty-message">
+            No favorite places yet.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HISTORY
+===================================================== -->
+
+<section
+    class="historical-section">
+
+    <h2>
+        🏛️ Historical Worship Places
+    </h2>
+
+    <p>
+        Explore the history, architecture and cultural
+        importance of sacred places around the world.
+    </p>
+
+    <button
+        id="historyBtn">
+
+        Explore History
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+
+<section
+    class="about-section"
+    id="about">
+
+    <h2>
+        About Worship Places Finder
+    </h2>
+
+    <p>
+        Worship Places Finder is a frontend discovery platform
+        designed to help people explore temples, mosques,
+        churches, gurdwaras, synagogues and other sacred places.
+        The application combines search, maps, location,
+        favorites and detailed information in one interface.
+    </p>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <h3>
+        🛕 Worship Places Finder
+    </h3>
+
+    <p>
+        Discover. Explore. Learn.
+    </p>
+
+    <div class="footer-links">
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="#places">
+            Places
+        </a>
+
+        <a href="#mapSection">
+            Map
+        </a>
+
+        <a href="#about">
+            About
+        </a>
+
+    </div>
+
+    <p>
+        © 2026 Worship Places Finder
+    </p>
+
+</footer>
+
+
+<!-- =====================================================
+     DETAILS MODAL
+===================================================== -->
+
+<div
+    id="detailsModal"
+    class="modal">
+
+    <div class="modal-content">
+
+        <button
+            id="closeModal"
+            class="close-btn">
+
+            ✕
+
+        </button>
+
+        <div
+            id="modalGallery"
+            class="modal-gallery">
+        </div>
+
+        <h2 id="modalTitle">
+            Worship Place
+        </h2>
+
+        <p id="modalType">
+            Worship Place
+        </p>
+
+        <div
+            id="modalDetails"
+            class="modal-details">
+        </div>
+
+        <div class="detail-grid">
+
+            <div>
+                <strong>
+                    🏛️ Architecture
+                </strong>
+
+                <p id="modalArchitecture">
+                    Traditional architecture
+                </p>
+
+            </div>
+
+            <div>
+                <strong>
+                    🕐 Opening Hours
+                </strong>
+
+                <p id="modalHours">
+                    06:00 AM - 08:00 PM
+                </p>
+
+            </div>
+
+            <div>
+                <strong>
+                    📞 Contact
+                </strong>
+
+                <p id="modalContact">
+                    Contact information
+                </p>
+
+            </div>
+
+            <div>
+                <strong>
+                    📍 Location
+                </strong>
+
+                <p id="modalLocation">
+                    Location available
+                </p>
+
+            </div>
+
+        </div>
+
+        <h3>
+            🛎️ Facilities
+        </h3>
+
+        <div
+            id="modalFacilities"
+            class="modal-facilities">
+        </div>
+
+        <h3>
+            📊 Rating Breakdown
+        </h3>
+
+        <div class="rating-breakdown">
+
+            <div>
+                5 ⭐
+                <span>
+                    ██████████
+                </span>
+            </div>
+
+            <div>
+                4 ⭐
+                <span>
+                    ███████
+                </span>
+            </div>
+
+            <div>
+                3 ⭐
+                <span>
+                    ███
+                </span>
+            </div>
+
+        </div>
+
+        <h3>
+            ⭐ User Reviews
+        </h3>
+
+        <div
+            id="modalReviews"
+            class="reviews">
+        </div>
+
+        <div class="modal-actions">
+
+            <button
+                id="modalDirections"
+                class="primary-btn">
+
+                🗺️ Directions
+
+            </button>
+
+            <button
+                id="modalShare"
+                class="secondary-btn">
+
+                ↗ Share
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div
+    id="toast"
+    class="toast">
+
+    <span id="toastMessage">
+        Done
+    </span>
+
+</div>
+
+
+<!-- =====================================================
+     BACK TO TOP
+===================================================== -->
+
+<button
+    id="backToTop"
+    class="back-to-top">
+
+    ↑
+
+</button>
+
+
+<!-- Leaflet -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+<script src="script.js"></script>
+
+</body>
+</html>
